@@ -684,8 +684,8 @@ function HierarchyLevel({
 
 function Arrow() {
   return (
-    <div className="flex justify-center py-2">
-      <div className="text-2xl text-slate-300">⬇</div>
+    <div className="flex justify-center">
+      <div className="text-sm leading-none text-slate-300">⬇</div>
     </div>
   );
 }
