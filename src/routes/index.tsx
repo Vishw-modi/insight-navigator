@@ -268,12 +268,19 @@ const accessData = [
   { name: "Blocked", value: 11, fill: RED },
 ];
 
-const newAccounts = [
-  { name: "Cleveland Clinic", v: 105 },
-  { name: "Baylor Scott & White", v: 92 },
-  { name: "Tenet Healthcare", v: 88 },
-  { name: "Northwell Health", v: 76 },
-  { name: "UPMC", v: 68 },
+const newAccounts: {
+  account: string;
+  territory: string;
+  activatedOn: string;
+  trx: number;
+  status: "Active" | "Ramping";
+}[] = [
+  { account: "Banner Health", territory: "Southwest", activatedOn: "Nov 12, 2025", trx: 42, status: "Ramping" },
+  { account: "Geisinger Health", territory: "Mid-Atlantic", activatedOn: "Nov 04, 2025", trx: 58, status: "Active" },
+  { account: "Intermountain Health", territory: "West", activatedOn: "Oct 28, 2025", trx: 71, status: "Active" },
+  { account: "Sutter Health", territory: "West", activatedOn: "Oct 18, 2025", trx: 36, status: "Ramping" },
+  { account: "Tenet Healthcare", territory: "Southeast", activatedOn: "Oct 09, 2025", trx: 88, status: "Active" },
+  { account: "AdventHealth", territory: "Southeast", activatedOn: "Sep 30, 2025", trx: 64, status: "Active" },
 ];
 
 const activations = [
