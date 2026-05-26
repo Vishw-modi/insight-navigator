@@ -519,16 +519,46 @@ function ExecutiveTab() {
         </Card>
       </div>
 
-      <Card title="Newly Activated Accounts" sub="15 HCO activations in the last 6 months">
-        <ResponsiveContainer width="100%" height={260}>
-          <BarChart data={newAccounts} layout="vertical" margin={{ left: 40 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" horizontal={false} />
-            <XAxis type="number" stroke="#64748b" fontSize={11} />
-            <YAxis type="category" dataKey="name" stroke="#64748b" fontSize={11} width={140} />
-            <Tooltip />
-            <Bar dataKey="v" fill={TEAL} radius={[0, 4, 4, 0]} />
-          </BarChart>
-        </ResponsiveContainer>
+      <Card title="Newly Activated Accounts" sub="Recent HCO activations with first-Rx volume and ramp status">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-slate-200">
+                {["Account", "Territory", "Activated On", "First-Month TRX", "Status"].map((h, i) => (
+                  <th
+                    key={h}
+                    className={`py-3 text-[10px] font-semibold uppercase tracking-wider text-slate-500 ${
+                      i === 3 ? "text-right" : i === 4 ? "text-left pl-6" : "text-left"
+                    }`}
+                  >
+                    {h}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {newAccounts.map((r) => (
+                <tr key={r.account} className="border-b border-slate-100 last:border-0">
+                  <td className="py-3.5 font-semibold text-slate-900">{r.account}</td>
+                  <td className="py-3.5 text-slate-600">{r.territory}</td>
+                  <td className="py-3.5 text-slate-600">{r.activatedOn}</td>
+                  <td className="py-3.5 text-right font-medium text-slate-900">{r.trx}</td>
+                  <td className="py-3.5 pl-6">
+                    <span
+                      className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                        r.status === "Active"
+                          ? "bg-emerald-50 text-emerald-700"
+                          : "bg-amber-50 text-amber-700"
+                      }`}
+                    >
+                      {r.status}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </Card>
     </div>
   );
