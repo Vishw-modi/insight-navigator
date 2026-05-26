@@ -268,12 +268,19 @@ const accessData = [
   { name: "Blocked", value: 11, fill: RED },
 ];
 
-const newAccounts = [
-  { name: "Cleveland Clinic", v: 105 },
-  { name: "Baylor Scott & White", v: 92 },
-  { name: "Tenet Healthcare", v: 88 },
-  { name: "Northwell Health", v: 76 },
-  { name: "UPMC", v: 68 },
+const newAccounts: {
+  account: string;
+  territory: string;
+  activatedOn: string;
+  trx: number;
+  status: "Active" | "Ramping";
+}[] = [
+  { account: "Banner Health", territory: "Southwest", activatedOn: "Nov 12, 2025", trx: 42, status: "Ramping" },
+  { account: "Geisinger Health", territory: "Mid-Atlantic", activatedOn: "Nov 04, 2025", trx: 58, status: "Active" },
+  { account: "Intermountain Health", territory: "West", activatedOn: "Oct 28, 2025", trx: 71, status: "Active" },
+  { account: "Sutter Health", territory: "West", activatedOn: "Oct 18, 2025", trx: 36, status: "Ramping" },
+  { account: "Tenet Healthcare", territory: "Southeast", activatedOn: "Oct 09, 2025", trx: 88, status: "Active" },
+  { account: "AdventHealth", territory: "Southeast", activatedOn: "Sep 30, 2025", trx: 64, status: "Active" },
 ];
 
 const activations = [
@@ -512,16 +519,46 @@ function ExecutiveTab() {
         </Card>
       </div>
 
-      <Card title="Newly Activated Accounts" sub="15 HCO activations in the last 6 months">
-        <ResponsiveContainer width="100%" height={260}>
-          <BarChart data={newAccounts} layout="vertical" margin={{ left: 40 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" horizontal={false} />
-            <XAxis type="number" stroke="#64748b" fontSize={11} />
-            <YAxis type="category" dataKey="name" stroke="#64748b" fontSize={11} width={140} />
-            <Tooltip />
-            <Bar dataKey="v" fill={TEAL} radius={[0, 4, 4, 0]} />
-          </BarChart>
-        </ResponsiveContainer>
+      <Card title="Newly Activated Accounts" sub="Recent HCO activations with first-Rx volume and ramp status">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-slate-200">
+                {["Account", "Territory", "Activated On", "First-Month TRX", "Status"].map((h, i) => (
+                  <th
+                    key={h}
+                    className={`py-3 text-[10px] font-semibold uppercase tracking-wider text-slate-500 ${
+                      i === 3 ? "text-right" : i === 4 ? "text-left pl-6" : "text-left"
+                    }`}
+                  >
+                    {h}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {newAccounts.map((r) => (
+                <tr key={r.account} className="border-b border-slate-100 last:border-0">
+                  <td className="py-3.5 font-semibold text-slate-900">{r.account}</td>
+                  <td className="py-3.5 text-slate-600">{r.territory}</td>
+                  <td className="py-3.5 text-slate-600">{r.activatedOn}</td>
+                  <td className="py-3.5 text-right font-medium text-slate-900">{r.trx}</td>
+                  <td className="py-3.5 pl-6">
+                    <span
+                      className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                        r.status === "Active"
+                          ? "bg-emerald-50 text-emerald-700"
+                          : "bg-amber-50 text-amber-700"
+                      }`}
+                    >
+                      {r.status}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </Card>
     </div>
   );
@@ -647,8 +684,8 @@ function HierarchyLevel({
 
 function Arrow() {
   return (
-    <div className="flex justify-center py-2">
-      <div className="text-2xl text-slate-300">⬇</div>
+    <div className="flex justify-center">
+      <div className="text-sm leading-none text-slate-300">⬇</div>
     </div>
   );
 }
@@ -755,86 +792,70 @@ function Account360Tab() {
         </p>
       </div>
 
-      <HierarchyLevel
-        num="01"
-        title="HCP Information"
-        iconBg="#cffafe"
-        rows={[
-          ["HCP ID", "HCP-582914"],
-          ["Specialty", "Oncology"],
-          ["Affiliation Type", "Primary Affiliated Provider"],
-          ["Territory", "Tennessee South"],
-          ["Target Status", "High Priority"],
-          ["KOL Status", "Medium"],
-        ]}
-      />
-      <Arrow />
-      <HierarchyLevel
-        num="02"
-        title="Facility Information"
-        iconBg="#dcfce7"
-        rows={[
-          ["Facility Name", "TriStar Centennial Medical Center"],
-          ["Facility Type", "Acute Care Hospital"],
-          ["Facility ID", "FAC-88312"],
-          ["Address", "2300 Patterson St"],
-          ["City", "Nashville"],
-          ["State", "Tennessee"],
-          ["Bed Capacity", "741"],
-        ]}
-      />
-      <Arrow />
-      <HierarchyLevel
-        num="03"
-        title="HCO Information"
-        iconBg="#fef3c7"
-        rows={[
-          ["HCO Name", "HCA TriStar Division"],
-          ["HCO Type", "Provider Network"],
-          ["HCO ID", "HCO-20481"],
-          ["Region", "Southeast"],
-          ["Territory", "Tennessee South"],
-          ["Formulary Status", "Preferred"],
-          ["Protocol Status", "Included"],
-        ]}
-      />
-      <Arrow />
-      <HierarchyLevel
-        num="04"
-        title="Parent Information"
-        iconBg="#e0e7ff"
-        rows={[
-          ["Parent Name", "HCA Healthcare, Inc."],
-          ["Parent Type", "IDN"],
-          ["Parent ID", "PARENT-10021"],
-          ["Headquarters", "One Park Plaza"],
-          ["City", "Nashville"],
-          ["State", "Tennessee"],
-          ["Total Facilities", "182"],
-        ]}
-      />
-
-      <div className="rounded-xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white p-6">
-        <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-teal-600 mb-3">
-          Dashboard Flow
-        </div>
-        <div className="flex flex-col items-center gap-2 text-sm text-slate-700">
-          <div className="font-semibold text-slate-900">HCP</div>
-          <div className="text-xs text-slate-500">(Oncology Affiliated Provider)</div>
-          <div className="text-slate-300">↓</div>
-          <div className="font-semibold text-slate-900">FACILITY</div>
-          <div className="text-xs text-slate-500">TriStar Centennial Medical Center</div>
-          <div className="text-slate-300">↓</div>
-          <div className="font-semibold text-slate-900">HCO</div>
-          <div className="text-xs text-slate-500">HCA TriStar Division</div>
-          <div className="text-slate-300">↓</div>
-          <div className="font-semibold text-slate-900">PARENT</div>
-          <div className="text-xs text-slate-500">HCA Healthcare, Inc.</div>
-        </div>
+      <div className="rounded-2xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white p-6 space-y-2">
+        <HierarchyLevel
+          num="01"
+          title="HCP Information"
+          iconBg="#cffafe"
+          rows={[
+            ["HCP ID", "HCP-582914"],
+            ["Specialty", "Oncology"],
+            ["Affiliation Type", "Primary Affiliated Provider"],
+            ["Territory", "Tennessee South"],
+            ["Target Status", "High Priority"],
+            ["KOL Status", "Medium"],
+          ]}
+        />
+        <Arrow />
+        <HierarchyLevel
+          num="02"
+          title="Facility Information"
+          iconBg="#dcfce7"
+          rows={[
+            ["Facility Name", "TriStar Centennial Medical Center"],
+            ["Facility Type", "Acute Care Hospital"],
+            ["Facility ID", "FAC-88312"],
+            ["Address", "2300 Patterson St"],
+            ["City", "Nashville"],
+            ["State", "Tennessee"],
+            ["Bed Capacity", "741"],
+          ]}
+        />
+        <Arrow />
+        <HierarchyLevel
+          num="03"
+          title="HCO Information"
+          iconBg="#fef3c7"
+          rows={[
+            ["HCO Name", "HCA TriStar Division"],
+            ["HCO Type", "Provider Network"],
+            ["HCO ID", "HCO-20481"],
+            ["Region", "Southeast"],
+            ["Territory", "Tennessee South"],
+            ["Formulary Status", "Preferred"],
+            ["Protocol Status", "Included"],
+          ]}
+        />
+        <Arrow />
+        <HierarchyLevel
+          num="04"
+          title="Parent Information"
+          iconBg="#e0e7ff"
+          rows={[
+            ["Parent Name", "HCA Healthcare, Inc."],
+            ["Parent Type", "IDN"],
+            ["Parent ID", "PARENT-10021"],
+            ["Headquarters", "One Park Plaza"],
+            ["City", "Nashville"],
+            ["State", "Tennessee"],
+            ["Total Facilities", "182"],
+          ]}
+        />
       </div>
     </div>
   );
 }
+
 
 function Index() {
   const [tab, setTab] = useState(0);
