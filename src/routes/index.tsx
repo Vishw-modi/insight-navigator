@@ -792,86 +792,70 @@ function Account360Tab() {
         </p>
       </div>
 
-      <HierarchyLevel
-        num="01"
-        title="HCP Information"
-        iconBg="#cffafe"
-        rows={[
-          ["HCP ID", "HCP-582914"],
-          ["Specialty", "Oncology"],
-          ["Affiliation Type", "Primary Affiliated Provider"],
-          ["Territory", "Tennessee South"],
-          ["Target Status", "High Priority"],
-          ["KOL Status", "Medium"],
-        ]}
-      />
-      <Arrow />
-      <HierarchyLevel
-        num="02"
-        title="Facility Information"
-        iconBg="#dcfce7"
-        rows={[
-          ["Facility Name", "TriStar Centennial Medical Center"],
-          ["Facility Type", "Acute Care Hospital"],
-          ["Facility ID", "FAC-88312"],
-          ["Address", "2300 Patterson St"],
-          ["City", "Nashville"],
-          ["State", "Tennessee"],
-          ["Bed Capacity", "741"],
-        ]}
-      />
-      <Arrow />
-      <HierarchyLevel
-        num="03"
-        title="HCO Information"
-        iconBg="#fef3c7"
-        rows={[
-          ["HCO Name", "HCA TriStar Division"],
-          ["HCO Type", "Provider Network"],
-          ["HCO ID", "HCO-20481"],
-          ["Region", "Southeast"],
-          ["Territory", "Tennessee South"],
-          ["Formulary Status", "Preferred"],
-          ["Protocol Status", "Included"],
-        ]}
-      />
-      <Arrow />
-      <HierarchyLevel
-        num="04"
-        title="Parent Information"
-        iconBg="#e0e7ff"
-        rows={[
-          ["Parent Name", "HCA Healthcare, Inc."],
-          ["Parent Type", "IDN"],
-          ["Parent ID", "PARENT-10021"],
-          ["Headquarters", "One Park Plaza"],
-          ["City", "Nashville"],
-          ["State", "Tennessee"],
-          ["Total Facilities", "182"],
-        ]}
-      />
-
-      <div className="rounded-xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white p-6">
-        <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-teal-600 mb-3">
-          Dashboard Flow
-        </div>
-        <div className="flex flex-col items-center gap-2 text-sm text-slate-700">
-          <div className="font-semibold text-slate-900">HCP</div>
-          <div className="text-xs text-slate-500">(Oncology Affiliated Provider)</div>
-          <div className="text-slate-300">↓</div>
-          <div className="font-semibold text-slate-900">FACILITY</div>
-          <div className="text-xs text-slate-500">TriStar Centennial Medical Center</div>
-          <div className="text-slate-300">↓</div>
-          <div className="font-semibold text-slate-900">HCO</div>
-          <div className="text-xs text-slate-500">HCA TriStar Division</div>
-          <div className="text-slate-300">↓</div>
-          <div className="font-semibold text-slate-900">PARENT</div>
-          <div className="text-xs text-slate-500">HCA Healthcare, Inc.</div>
-        </div>
+      <div className="rounded-2xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white p-6 space-y-2">
+        <HierarchyLevel
+          num="01"
+          title="HCP Information"
+          iconBg="#cffafe"
+          rows={[
+            ["HCP ID", "HCP-582914"],
+            ["Specialty", "Oncology"],
+            ["Affiliation Type", "Primary Affiliated Provider"],
+            ["Territory", "Tennessee South"],
+            ["Target Status", "High Priority"],
+            ["KOL Status", "Medium"],
+          ]}
+        />
+        <Arrow />
+        <HierarchyLevel
+          num="02"
+          title="Facility Information"
+          iconBg="#dcfce7"
+          rows={[
+            ["Facility Name", "TriStar Centennial Medical Center"],
+            ["Facility Type", "Acute Care Hospital"],
+            ["Facility ID", "FAC-88312"],
+            ["Address", "2300 Patterson St"],
+            ["City", "Nashville"],
+            ["State", "Tennessee"],
+            ["Bed Capacity", "741"],
+          ]}
+        />
+        <Arrow />
+        <HierarchyLevel
+          num="03"
+          title="HCO Information"
+          iconBg="#fef3c7"
+          rows={[
+            ["HCO Name", "HCA TriStar Division"],
+            ["HCO Type", "Provider Network"],
+            ["HCO ID", "HCO-20481"],
+            ["Region", "Southeast"],
+            ["Territory", "Tennessee South"],
+            ["Formulary Status", "Preferred"],
+            ["Protocol Status", "Included"],
+          ]}
+        />
+        <Arrow />
+        <HierarchyLevel
+          num="04"
+          title="Parent Information"
+          iconBg="#e0e7ff"
+          rows={[
+            ["Parent Name", "HCA Healthcare, Inc."],
+            ["Parent Type", "IDN"],
+            ["Parent ID", "PARENT-10021"],
+            ["Headquarters", "One Park Plaza"],
+            ["City", "Nashville"],
+            ["State", "Tennessee"],
+            ["Total Facilities", "182"],
+          ]}
+        />
       </div>
     </div>
   );
 }
+
 
 function Index() {
   const [tab, setTab] = useState(0);
